@@ -1,14 +1,20 @@
+// Variables to keep track of scores.
 let userScore = 0; 
 let computerScore = 0;  
 
+//Function that randomly chooses computer selection.
 function computerPlay() { 
   let myList = ["Rock", "Paper", "Scissors"]; 
   let list = myList[Math.floor(Math.random() * myList.length)];   
   return list;
 }  
 
-function playRound () {    
+// Function that plays one round of rock-paper-scissors game.
+function playRound () {     
+  
+  //Variable that stores user Selection.
   let playerSelection = prompt("User input: ").toLowerCase(); 
+  // Variable that stores result of computerPlay() function.
   let computerSelection = computerPlay();  
 
   if (playerSelection === "rock" && computerSelection === "Paper") { 
@@ -36,6 +42,7 @@ function playRound () {
   }
 }  
 
+// Function that plays multiple rounds of rock-paper-scissors game, until it stops after 5 rounds.
 function game () {   
   console.log(playRound());  
   console.log(userScore, computerScore);
@@ -46,6 +53,8 @@ function game () {
    }
    
   }
+
+  // Function that declares winner of the game.
 function endGame() { 
   if (userScore > computerScore) { 
     console.log("Game over. You win!");
