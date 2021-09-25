@@ -1,66 +1,76 @@
 // Variables to keep track of scores.
+let options = document.querySelectorAll(".options");  
 let userScore = 0; 
-let computerScore = 0;  
+let computerScore = 0;    
 
-//Function that randomly chooses computer selection.
-function computerPlay() { 
-  let myList = ["Rock", "Paper", "Scissors"]; 
-  let list = myList[Math.floor(Math.random() * myList.length)];   
-  return list;
-}  
+//Function that assigns player and computer choice. It also plays game inside HTML.
+options.forEach((option) => { 
+   option.addEventListener("click", function () { 
+     let playerSelection = this.textContent;  
+     console.log(playerSelection);
+
+  let myList = ["ROCK", "PAPER", "SCISSORS"]; 
+  let computerSelection = myList[Math.floor(Math.random() * myList.length)];    
+  console.log(computerSelection);  
+
+  playRound(playerSelection, computerSelection);  
+  updateScore();   
+  if(endGame()) {  
+    userScore = computerScore = 0; 
+    updateScore();
+  }  
+   }) 
+});
+
 
 // Function that plays one round of rock-paper-scissors game.
-function playRound () {     
+function playRound (playerSelection, computerSelection) {  
+
+  if (playerSelection === "ROCK" && computerSelection === "PAPER") { 
+    alert ("You Lose! Paper beats Rock.");  
+    computerScore++;
+  } else if (playerSelection === "ROCK" && computerSelection === "ROCK") { 
+    alert ("It's a draw."); 
+  }
+    else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") { 
+    alert ("You win! Rock beats Scissors.");  
+    userScore++; 
+  } 
   
-  //Variable that stores user Selection.
-  let playerSelection = prompt("User input: ").toLowerCase(); 
-  // Variable that stores result of computerPlay() function.
-  let computerSelection = computerPlay();  
-
-  if (playerSelection === "rock" && computerSelection === "Paper") { 
-    return computerScore++, "You Lose! Paper beats Rock.";
-  } else if (playerSelection === "rock" && computerSelection === "Rock") { 
+  if (playerSelection === "PAPER" && computerSelection === "PAPER") { 
     return "It's a draw.";
-  } else if (playerSelection === "rock" && computerSelection === "Scissors") { 
-    return userScore++, "You win! Rock beats Scissors." 
+  } else if (playerSelection === "PAPER" && computerSelection === "ROCK") { 
+    alert ("You win! Paper beats Rock.");  
+    userScore++;
+  } else if (playerSelection === "PAPER" && computerSelection === "SCISSORS") { 
+    alert ("You Lose! Scissors beats Paper.");  
+    computerScore++;
   } 
 
-  if (playerSelection === "paper" && computerSelection === "Paper") { 
-    return "It's a draw.";
-  } else if (playerSelection === "paper" && computerSelection === "Rock") { 
-    return userScore++, "You win! Paper beats rock." 
-  } else if (playerSelection === "paper" && computerSelection === "Scissors") { 
-    return computerScore++, "You lose! Scissors beat paper."
-  } 
-
-  if (playerSelection === "scissors" && computerSelection === "Paper") { 
-    return userScore++, "You win! Scissors beats paper." 
-  } else if (playerSelection === "scissors" && computerSelection === "Rock") { 
-    return computerScore++, "You lose! Rock beats scissors." 
-  } else if (playerSelection === "scissors" && computerSelection === "Scissors") { 
+  if (playerSelection === "SCISSORS" && computerSelection === "PAPER") { 
+    alert ("You win! Scissors beats paper.");  
+    userScore++; 
+  } else if (playerSelection === "SCISSORS" && computerSelection === "ROCK") { 
+    alert ("You Lose! Rock beats scissors.");  
+    computerScore++; 
+  } else if (playerSelection === "SCISSORS" && computerSelection === "SCISSORS") { 
     return "It's a draw";
   }
-}  
+}   
 
-// Function that plays multiple rounds of rock-paper-scissors game, until it stops after 5 rounds.
-function game () {   
-  console.log(playRound());  
-  console.log(userScore, computerScore);
-   if (userScore < 3 && computerScore < 3) { 
-     game() 
-   } else { 
-     endGame();
-   }
-   
-  }
-
-  // Function that declares winner of the game.
-function endGame() { 
-  if (userScore > computerScore) { 
-    console.log("Game over. You win!");
-  } else { 
-    console.log("Game over. You lose!")
-  }
+// Function that updates html score
+function updateScore () { 
+  document.getElementById("userScore").textContent = userScore;
+  document.getElementById("computerScore").textContent = computerScore;
 }
-game(); 
-console.log(userScore, computerScore);
+
+//Function that determines winner 
+function endGame () { 
+  if (userScore === 5) {   
+    alert ("You win.");
+    return true; 
+  } else if (computerScore === 5) { 
+    alert ("You lose. Computer wins.") 
+    return true;
+  } return false;
+}
